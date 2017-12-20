@@ -1,0 +1,8 @@
+$RegKeys = Get-ChildItem -Path HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall | Get-ItemProperty
+$InstalledESTEID = $RegKeys | Where-Object DisplayName -eq 'Open-EID Uninstaller'
+If([System.Version]$InstalledESTEID.DisplayVersion -eq [System.Version]'IDCARDVERSIONHERE')
+{
+    Write-Host "OK"
+}
+Else{
+}
