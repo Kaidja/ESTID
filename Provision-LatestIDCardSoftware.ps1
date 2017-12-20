@@ -363,7 +363,7 @@ $SourceRoot = 'E:\Sources\Software\ID-Kaart'
 $IconFile = "$SourceRoot\ID.jpg"
 $Script:LogDirectory = "E:\Scripts\Logs\IDSoftware.log"
 $DetectionFile = 'E:\Scripts\ID-CardDetectionMethod.txt'
-$SiteServer = 'CM01.tptlive.ee'
+$SiteServer = 'CM01.contoso.com'
 
 Write-Log -Message "************************ Starting to check new version of ID-Card Utility  - $(Get-Date)*** ********************" -Severity 1 -Component 'START'
 
@@ -375,7 +375,6 @@ $LastIDCardExeVersion = [System.Version]"$($LastIDCardVersion.TrimStart("Open-EI
 
 #ConfigMgr variables
 $ApplicationName = "Eesti ID-Kaardi Utiliit - $IDCardVersionString"
-$DeploymentTypeName = 'Install - ID-Kaardi Utiliit'
 $PackageSource = "\\cm01\sources$\Software\ID-Kaart\$IDCardVersionString"
 $CommandLine = "$LastIDCardVersion /quiet /norestart AutoUpdate=0 IconsDesktop=0 RunQesteidutil=0"
 $InstallCollectionName = "SWD - Eesti ID-Kaardi Utiliit - $IDCardVersionString"
