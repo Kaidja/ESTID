@@ -389,10 +389,10 @@ $DeploymentDeadlineDateTime = (Get-Date).AddMinutes(5)
 
 #Notification configuraton. By default notification is turned off. This requires SMTP address.
 $SendNotification = $True
-$SmtpServer = '193.40.160.1'
+$SmtpServer = ''
 $Subject = 'Uus ID-Kaardi tarkvara on saadaval'
-$To = 'Toivo.parnpuu@tptlive.ee'
-$From = 'ITHaldus@tptlive.ee'
+$To = ''
+$From = ''
 $Body = "Uus versioon on saadaval - $IDCardVersionString"
 
 #Import ConfigMgr PowerShell Module
@@ -404,7 +404,7 @@ If(Get-KJConfigMgrApplication -Name $ApplicationName){
 Else{
 
     If($SendNotification){
-        Send-KJMailNotification -SmtpServer -To $To -From $From -Subject $Subject -Body $Body
+        Send-KJMailNotification -SmtpServer $SmtpServer -To $To -From $From -Subject $Subject -Body $Body
     }
 
     Save-KJLastIDCardVersion -URL $URL -Folder $DownloadLocation -Version $LastIDCardVersion
