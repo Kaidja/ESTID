@@ -56,6 +56,7 @@ Function Import-KJConfigMgrModule
     }
     Catch {
         Get-ErrorInformation -Component 'Function: Import-KJConfigMgrModule'
+        Throw "Module import failed"
     }
 
 }
@@ -151,16 +152,15 @@ Function Move-KJIDCardInstallationFiles
         Write-Log -Message "Move all MSI files to $DownloadFolder folder" -Severity 1 -Component 'Function: Move-KJIDCardInstallationFiles'
         Get-ChildItem -Path $DownloadFolder -Filter "*.msi" -ErrorAction STOP | ForEach-Object {
 
-            Move-Item -Path $PSItem.FullName -Destination "$SourceRootFolder\$Version"
-            #Write-Log -Message "copying $($PSItem.FullName) to $SourceRoot\$NewVersion" -severity 1 -component 'Install'
+            Move-Item -Path $PSItem.FullName -Destination "$SourceRootFolder\$Version" -Force
+            Write-Log -Message "Copying $($PSItem.FullName) to $SourceRootFolder\$Version" -severity 1 -component 'Function: Move-KJIDCardInstallationFiles'
         }
 
         Write-Log -Message "Move all EXE files to $DownloadFolder folder" -Severity 1 -Component 'Function: Move-KJIDCardInstallationFiles'
         Get-ChildItem -Path $DownloadFolder -Filter "*.exe" -ErrorAction STOP | ForEach-Object {
 
-            Move-Item -Path $PSItem.FullName -Destination "$SourceRootFolder\$Version"
-            #Write-Log -Message "Setting new version $LastExe to LastVersion.txt" -severity 1 -component 'Install'
-            #Write-Log -Message "copying $($PSItem.FullName) to $SourceRoot\$NewVersion" -severity 1 -component 'Install'
+            Move-Item -Path $PSItem.FullName -Destination "$SourceRootFolder\$Version" -Force
+            Write-Log -Message "Copying $($PSItem.FullName) to $SourceRoot\$NewVersion" -severity 1 -component 'Function: Move-KJIDCardInstallationFiles'
         }
     }
     Catch{
@@ -388,12 +388,12 @@ $DeploymentAvailableDate = Get-Date
 $DeploymentDeadlineDateTime = (Get-Date).AddMinutes(5)
 
 #Notification configuraton. By default notification is turned off. This requires SMTP address.
-$SendNotification = $False
-$SmtpServer = ''
-$Subject = ''
-$To = ''
-$From = ''
-$Body = ''
+$SendNotification = $True
+$SmtpServer = '193.40.160.1'
+$Subject = 'Uus ID-Kaardi tarkvara on saadaval'
+$To = 'Toivo.parnpuu@tptlive.ee'
+$From = 'ITHaldus@tptlive.ee'
+$Body = "Uus versioon on saadaval - $IDCardVersionString"
 
 #Import ConfigMgr PowerShell Module
 Import-KJConfigMgrModule -SiteCode $SiteCode -SiteServer $SiteServer
