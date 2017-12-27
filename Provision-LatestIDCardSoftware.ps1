@@ -388,7 +388,7 @@ $DeploymentAvailableDate = Get-Date
 $DeploymentDeadlineDateTime = (Get-Date).AddMinutes(5)
 
 #Notification configuraton. By default notification is turned off. This requires SMTP address.
-$SendNotification = $True
+$SendNotification = $False
 $SmtpServer = ''
 $Subject = 'Uus ID-Kaardi tarkvara on saadaval'
 $To = ''
