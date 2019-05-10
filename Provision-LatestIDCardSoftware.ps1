@@ -68,6 +68,7 @@ Function Get-KJLastIDCardVersion
     )
 
     Try{
+        [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
         Write-Log -Message "Reading ID-Card version from $URL" -Severity 1 -Component 'Function: Get-KJLastIDCardVersion'
 
         $HTML = Invoke-WebRequest $URL -ErrorAction STOP
@@ -370,8 +371,10 @@ Write-Log -Message "************************ Starting to check new version of ID
 #Get the latest EST ID Card utility version
 $IDCardVersions = Get-KJLastIDCardVersion -URL $URL
 $LastIDCardVersion = $IDCardVersions | Select-Object -Last 1
-$IDCardVersionString = $LastIDCardVersion.TrimStart("Open-EID-").trimend("_x86.exe")
-$LastIDCardExeVersion = [System.Version]"$($LastIDCardVersion.TrimStart("Open-EID-").TrimEnd("_x86.exe"))"
+#$IDCardVersionString = $LastIDCardVersion.TrimStart("Open-EID-").trimend("_x86.exe")
+#$LastIDCardExeVersion = [System.Version]"$($LastIDCardVersion.TrimStart("Open-EID-").TrimEnd("_x86.exe"))"
+$IDCardVersionString = ($LastIDCardVersion.TrimStart("Open-EID-") -split "_")[0]
+$LastIDCardExeVersion = [System.Version]$IDCardVersionString
 
 #ConfigMgr variables
 $ApplicationName = "Eesti ID-Kaardi Utiliit - $IDCardVersionString"
